@@ -10,3 +10,12 @@ Fonctionnalités:
 - Base de Données
 - Sécurité
 - Déploiement
+
+Technologies Recommandées
+• Frontend : 
+• Backend : 
+• Base de Données : 
+• IA : Intégration de DeepSeek via Ollama (API ou modèle local).
+• Détection de Plagiat :
+• Chatbot : 
+• Déploiement :
