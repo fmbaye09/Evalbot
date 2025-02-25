@@ -11,6 +11,7 @@ DeepSeek (via Ollama) pour fournir une correction automatique des copies, une
 telles que la détection de plagiat, un chatbot d'assistance et des statistiques 
 détaillées. Cette solution vise à simplifier le processus de gestion des examens tout 
 en offrant une évaluation rapide, objective et enrichie.
+
 Fonctionnalités Requises
 1. Gestion des Utilisateurs :
 o Deux types d'utilisateurs : Enseignants et Étudiants.
