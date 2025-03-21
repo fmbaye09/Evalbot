@@ -146,4 +146,6 @@ Le schéma de la base de données comprend les tables principales suivantes:
 - Mamadou DIALLO
 - Mouhamadou Mourtada DIOP
 - Babacar Mbaye FAYE
+- Ahmad Tidiane KANE
+
 
