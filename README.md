@@ -8,11 +8,9 @@ Evalbot est une application web complète pour la gestion, la soumission et l'é
 - [Architecture](#-architecture)
 - [Technologies utilisées](#-technologies-utilisées)
 - [Installation et configuration](#-installation-et-configuration)
-- [Structure du projet](#-structure-du-projet)
 - [API](#-api)
 - [Base de données](#-base-de-données)
-- [Contribuer](#-contribuer)
-- [Licence](#-licence)
+
 
 ## ✨ Fonctionnalités
 
