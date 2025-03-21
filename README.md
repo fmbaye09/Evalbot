@@ -103,6 +103,8 @@ JWT_SECRET=votre_clé_secrète_très_longue_et_complexe_à_changer_en_production
 
 # Autres variables d'environnement
 VITE_API_URL=http://localhost:3003/api
+
+
 ```
 
 4. **Créer et initialiser la base de données**
@@ -116,9 +118,6 @@ npm run db:init
 ```bash
 npm run dev:server
 #
-
-
-
 
 
 ## 🔌 API
