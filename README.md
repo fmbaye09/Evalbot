@@ -1,4 +1,4 @@
-# Evalbot - Plateforme d'Évaluation et de Détection de Plagiat
+# Evalbot - Plateforme Intelligente de gestion d'examens 
 
 Evalbot est une application web complète pour la gestion, la soumission et l'évaluation d'examens, avec des fonctionnalités avancées de détection de plagiat et d'assistance par IA.
 
