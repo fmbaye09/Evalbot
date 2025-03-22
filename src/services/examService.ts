@@ -75,9 +75,6 @@ class ExamService {
       }
       formData.append('file', file);
 
-      // Ajouter un indicateur pour envoyer des notifications
-      formData.append('send_notifications', 'true');
-
       const response = await fetchWithAuth('/exams', {
         method: 'POST',
         body: formData,
@@ -91,11 +88,6 @@ class ExamService {
 
       const exam = await response.json();
       console.log('Examen créé avec succès:', exam);
-      
-      // Facultatif: afficher un toast pour confirmer que des notifications ont été envoyées
-      // Si vous avez une bibliothèque de toast, vous pouvez l'utiliser ici
-      // toast.success('Les étudiants ont été notifiés du nouvel examen');
-      
       return exam;
     } catch (error) {
       console.error('Erreur lors de la création de l\'examen:', error);

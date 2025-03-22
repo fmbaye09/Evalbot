@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { DashboardLayout } from "@/components/DashboardLayout";
-import { FileText, Users, BarChart, Plus, Clock, CheckCircle, AlertCircle, Search } from "lucide-react";
+import { FileText, Users, BarChart, Plus, Clock, CheckCircle, AlertCircle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchExams } from "@/services/examService";
 import { fetchSubmissions } from "@/services/submissionService";
@@ -111,7 +111,7 @@ export default function TeacherDashboard() {
         </div>
 
         {/* Actions principales */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card>
             <CardHeader>
               <CardTitle>Gestion des Examens</CardTitle>
@@ -175,25 +175,6 @@ export default function TeacherDashboard() {
               >
                 <BarChart className="mr-2 h-4 w-4" />
                 Voir les statistiques
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Détection de Plagiat</CardTitle>
-              <CardDescription>
-                Analysez les similarités entre les copies
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button 
-                className="w-full" 
-                variant="secondary"
-                onClick={() => navigate("/teacher/plagiarism")}
-              >
-                <Search className="mr-2 h-4 w-4" />
-                Détecter le plagiat
               </Button>
             </CardContent>
           </Card>

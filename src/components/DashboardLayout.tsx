@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { DashboardNav } from "@/components/DashboardNav";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
-import { NotificationCenter } from "@/components/NotificationCenter";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -35,7 +34,6 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           
           <div className="flex items-center space-x-2">
             <img src="/img/bot.jpg" alt="logo" className="h-8 w-auto object-contain" />
-            <NotificationCenter />
             <Button
               variant="ghost"
               size="icon"

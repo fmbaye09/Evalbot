@@ -14,13 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { useState } from "react";
@@ -55,7 +48,7 @@ export default function TeacherSubmissions() {
     }
   };
 
-  // Gestion de la correction automatique manuelle
+  // Gestion de la correction automatique
   const handleAutoGrade = async (submission: any) => {
     try {
       setAutoGradingId(submission.id);
@@ -116,10 +109,6 @@ export default function TeacherSubmissions() {
           <p className="text-muted-foreground">
             {pendingSubmissions.length} copies nécessitent votre attention
           </p>
-          <div className="mt-2 text-sm text-muted-foreground flex items-center">
-            <Bot className="h-4 w-4 mr-2" />
-            Les soumissions sont corrigées automatiquement si un corrigé type existe
-          </div>
         </div>
 
         <Card>
@@ -153,24 +142,7 @@ export default function TeacherSubmissions() {
                       </TableCell>
                       <TableCell>
                         {submission.grade ? (
-                          <div className="flex items-center">
-                            <span className="text-green-500 mr-2">Corrigé</span>
-                            {submission.auto_graded && (
-                              <TooltipProvider>
-                                <Tooltip>
-                                  <TooltipTrigger>
-                                    <Badge variant="outline" className="bg-blue-50 text-blue-700 hover:bg-blue-100">
-                                      <Bot className="h-3 w-3 mr-1" />
-                                      Auto
-                                    </Badge>
-                                  </TooltipTrigger>
-                                  <TooltipContent>
-                                    <p>Corrigé automatiquement</p>
-                                  </TooltipContent>
-                                </Tooltip>
-                              </TooltipProvider>
-                            )}
-                          </div>
+                          <span className="text-green-500">Corrigé</span>
                         ) : (
                           <span className="text-yellow-500">En attente</span>
                         )}
@@ -216,16 +188,6 @@ export default function TeacherSubmissions() {
                               Noter
                             </Button>
                           </>
-                        )}
-                        {submission.grade && (
-                          <Button
-                            variant="default"
-                            size="sm"
-                            onClick={() => setSelectedSubmission(submission)}
-                          >
-                            <Check className="h-4 w-4 mr-2" />
-                            Modifier
-                          </Button>
                         )}
                       </TableCell>
                     </TableRow>

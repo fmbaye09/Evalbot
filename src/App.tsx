@@ -13,7 +13,6 @@ import StudentDashboard from "@/pages/student/StudentDashboard";
 import ExamsManagement from "@/pages/teacher/ExamsManagement";
 import TeacherSubmissions from "@/pages/teacher/TeacherSubmissions";
 import TeacherStats from "@/pages/teacher/TeacherStats";
-import PlagiarismDetection from "@/pages/teacher/PlagiarismDetection";
 import StudentExams from "@/pages/student/StudentExams";
 import StudentResults from "@/pages/student/StudentResults";
 import StudentSubmissions from "@/pages/student/StudentSubmissions";
@@ -26,7 +25,7 @@ const queryClient = new QueryClient({
       retry: 1, // Limit retry attempts
       refetchOnWindowFocus: false, // Don't refetch when window regains focus
       staleTime: 5 * 60 * 1000, // 5 minutes
-      gcTime: 10 * 60 * 1000, // 10 minutes (anciennement cacheTime)
+      cacheTime: 10 * 60 * 1000, // 10 minutes
     },
   },
 });
@@ -100,14 +99,6 @@ const App = () => {
                   element={
                     <ProtectedRoute allowedRoles={["teacher"]}>
                       <TeacherStats />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/teacher/plagiarism"
-                  element={
-                    <ProtectedRoute allowedRoles={["teacher"]}>
-                      <PlagiarismDetection />
                     </ProtectedRoute>
                   }
                 />

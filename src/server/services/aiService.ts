@@ -40,7 +40,7 @@ ${examContent}
 Génère un corrigé type complet, clair et précis pour ce sujet. 
 Le corrigé doit :
 - Couvrir tous les points importants du sujet
-- Fournir des réponses justifiées
+- Fournir des réponses détaillées et justifiées
 - Respecter la structure du sujet original
 - Inclure des informations pertinentes et exactes
 - Être bien organisé avec des sections claires
@@ -84,11 +84,11 @@ ${studentSubmission}
 
 
 
-Donne une note sur 20 et un feedback tres bref.
+Donne une note sur 20 et un feedback détaillé.
 IMPORTANT: Ta réponse doit être au format JSON suivant sans aucun autre texte :
 {
   "grade": <note sur 20>,
-  "feedback": "<feedback tres bref>"
+  "feedback": "<feedback détaillé>"
 }
 `;
 

@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { NotificationCenter } from "@/components/NotificationCenter";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -37,7 +36,6 @@ const Navbar = () => {
               </span>
             </div>
           </div>
-          <NotificationCenter />
           <Button variant="ghost" size="icon" onClick={handleLogout}>
             <LogOut className="h-5 w-5" />
           </Button>

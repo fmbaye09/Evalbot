@@ -1,4 +1,4 @@
-// import { Submission } from '../types';
+import { Submission } from '../types';
 import { fetchWithAuth } from '../utils/api';
 
 interface FetchSubmissionsParams {
@@ -86,36 +86,11 @@ class SubmissionService {
   }
 
   async gradeSubmission(id: string, grade: number, feedback: string): Promise<Submission | null> {
-    try {
-      const response = await fetchWithAuth(`/submissions/${id}/grade`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          grade,
-          feedback,
-          send_notification: true
-        }),
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.text();
-        console.error('Réponse du serveur:', errorData);
-        throw new Error(`Erreur lors de la notation: ${response.status}`);
-      }
-      
-      const updatedSubmission = await response.json();
-      
-      return updatedSubmission;
-    } catch (error) {
-      console.error('Erreur lors de la notation de la soumission:', error);
-      return this.updateSubmission(id, {
-        status: 'graded',
-        grade,
-        feedback
-      });
-    }
+    return this.updateSubmission(id, {
+      status: 'graded',
+      grade,
+      feedback
+    });
   }
 }
 

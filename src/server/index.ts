@@ -1,5 +1,4 @@
 import express, { Request } from 'express';
-import http from 'http';
 import cors from 'cors';
 import bcrypt from 'bcrypt';
 import multer from 'multer';
@@ -14,15 +13,7 @@ import { config } from './config';
 import examRoutes from './routes/examRoutes';
 import authRoutes from './routes/authRoutes';
 import correctionRoutes from './routes/correctionRoutes';
-import notificationRoutes from './routes/notificationRoutes';
-import plagiarismRoutes from './routes/plagiarismRoutes';
-import aiRouter from './routes/aiRouter';
 import { SUBMISSIONS_DIR, EXAMS_DIR, UPLOAD_DIR, ensureDirectoryExists } from './utils/fileHandler';
-import { AiService } from './services/aiService';
-import { PdfService } from './services/pdfService';
-import { CorrigeTypeModel } from './models/corrigeType';
-import { NotificationService } from './services/notificationService';
-import { setupChatbotTables } from './db/setup-chatbot';
 
 dotenv.config();
 
@@ -108,10 +99,6 @@ interface AuthenticatedRequest extends Request {
 }
 
 const app = express();
-const server = http.createServer(app);
-
-// Initialiser le service de notification avec le serveur HTTP
-const notificationService = new NotificationService(server);
 
 console.log('Configuration du serveur:', {
   port: config.port,
@@ -136,9 +123,6 @@ app.use('/uploads', express.static(path.join(process.cwd(), config.uploadDir)));
 app.use('/api/auth', authRoutes);
 app.use('/api/exams', examRoutes);
 app.use('/api/correction', correctionRoutes);
-app.use('/api/notifications', notificationRoutes);
-app.use('/api/plagiarism', plagiarismRoutes);
-app.use('/api/ai', aiRouter);
 
 // Middleware d'authentification
 const authenticateToken = async (req: AuthenticatedRequest, res: express.Response, next: express.NextFunction) => {
@@ -354,27 +338,6 @@ app.post('/api/exams', authenticateToken, examUpload.single('file'), async (req:
     };
 
     console.log('Examen créé avec succès:', examWithTeacher);
-    
-    // Notifier tous les étudiants de ce nouvel examen
-    if (req.user?.role === 'teacher') {
-      // Récupérer tous les étudiants
-      const studentsResult = await pool.query(
-        'SELECT id FROM users WHERE role = $1',
-        ['student']
-      );
-      
-      if (studentsResult.rows.length > 0) {
-        const studentIds = studentsResult.rows.map(student => student.id);
-        
-        // Envoyer des notifications
-        await notificationService.notifyNewExam(
-          studentIds,
-          examWithTeacher.id,
-          examWithTeacher.title
-        );
-      }
-    }
-    
     res.json(examWithTeacher);
   } catch (error) {
     console.error('Erreur lors de la création de l\'examen:', error);
@@ -557,55 +520,6 @@ app.post('/api/submissions', authenticateToken, submissionUpload.single('file'),
       );
       console.log('Nouvelle soumission créée:', result.rows[0]);
     }
-    
-    // NOUVELLE PARTIE: Correction automatique immédiate
-    try {
-      console.log('Tentative de correction automatique immédiate');
-      
-      // Vérifier si un corrigé type existe pour cet examen
-      const corrigeType = await CorrigeTypeModel.findByExamId(exam_id);
-      
-      if (corrigeType) {
-        console.log('Corrigé type trouvé, extraction du texte de la soumission');
-        // Extraire le texte de la soumission
-        const submissionText = await PdfService.extractTextFromPdf(filePath);
-        
-        console.log('Correction automatique avec l\'IA');
-        // Corriger la soumission avec l'IA
-        const gradeResult = await AiService.gradeSubmission(submissionText, corrigeType.content);
-        
-        console.log('Résultat de la correction automatique:', gradeResult);
-        // Mettre à jour la soumission avec la note et le feedback
-        await pool.query(
-          `UPDATE submissions 
-           SET grade = $1, feedback = $2, status = 'graded', graded_at = CURRENT_TIMESTAMP, auto_graded = true 
-           WHERE id = $3`,
-          [gradeResult.grade, gradeResult.feedback, result.rows[0].id]
-        );
-        
-        // Mise à jour du résultat pour inclure la note
-        result.rows[0].grade = gradeResult.grade;
-        result.rows[0].feedback = gradeResult.feedback;
-        result.rows[0].status = 'graded';
-        result.rows[0].auto_graded = true;
-        
-        console.log('Soumission corrigée automatiquement:', result.rows[0]);
-        
-        // Notifier l'étudiant de sa note
-        await notificationService.notifyGraded(
-          req.user?.id || '',
-          result.rows[0].id,
-          exam.title,
-          gradeResult.grade
-        );
-      } else {
-        console.log('Aucun corrigé type trouvé pour cet examen, pas de correction automatique');
-      }
-    } catch (autoGradeError) {
-      // Si la correction automatique échoue, on continue quand même
-      console.error('Erreur lors de la correction automatique:', autoGradeError);
-      // La soumission est quand même enregistrée, mais sans note
-    }
 
     console.log('Soumission réussie, envoi de la réponse');
     res.json(result.rows[0]);
@@ -672,10 +586,9 @@ app.put('/api/submissions/:id', authenticateToken, async (req: AuthenticatedRequ
 
     // Vérifier que la soumission existe et appartient à un examen du professeur
     const submissionResult = await pool.query(
-      `SELECT s.*, e.user_id as teacher_id, e.title as exam_title, u.id as student_id 
+      `SELECT s.*, e.user_id as teacher_id 
        FROM submissions s 
        JOIN exams e ON s.exam_id = e.id 
-       JOIN users u ON s.user_id = u.id
        WHERE s.id = $1`,
       [id]
     );
@@ -696,19 +609,10 @@ app.put('/api/submissions/:id', authenticateToken, async (req: AuthenticatedRequ
            feedback = $2, 
            status = 'graded',
            graded_at = CURRENT_TIMESTAMP,
-           updated_at = CURRENT_TIMESTAMP,
-           auto_graded = false
+           updated_at = CURRENT_TIMESTAMP
        WHERE id = $3
        RETURNING *`,
       [grade, feedback, id]
-    );
-
-    // Notifier l'étudiant de sa note
-    await notificationService.notifyGraded(
-      submission.student_id,
-      id,
-      submission.exam_title,
-      grade
     );
 
     res.json(result.rows[0]);
@@ -731,14 +635,6 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
 });
 
 // Démarrage du serveur
-server.listen(config.port, async () => {
+app.listen(config.port, () => {
   console.log(`Serveur démarré sur le port ${config.port}`);
-  
-  // Initialisation des tables du chatbot
-  try {
-    await setupChatbotTables();
-    console.log('Tables du chatbot initialisées avec succès!');
-  } catch (error) {
-    console.error('Erreur lors de l\'initialisation des tables du chatbot:', error);
-  }
 }); 
