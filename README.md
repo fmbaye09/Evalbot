@@ -7,14 +7,13 @@ Une application moderne de gestion d'examens avec correction automatique et dét
 ## 📋 Table des matières
 
 - [Fonctionnalités principales](#-fonctionnalités-principales)
-- [Captures d'écran](#-captures-décran)
 - [Technologies utilisées](#-technologies-utilisées)
 - [Installation](#-installation)
 - [Configuration](#-configuration)
 - [Utilisation](#-utilisation)
 - [Architecture](#-architecture)
 - [API Reference](#-api-reference)
-- [Dépannage](#-dépannage)
+- [Difficultés rencontrées](#-dépannage)
 
 ## 🚀 Fonctionnalités principales
 
