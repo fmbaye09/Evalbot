@@ -228,35 +228,22 @@ GET    /api/plagiarism/results/:examId    - Résultats de plagiat
 DELETE /api/plagiarism/results/:examId    - Supprimer les résultats
 ```
 
-## 🔍 Dépannage
+## 🔍 Difficultés Rencontrées
 
-### Problèmes courants
 
-#### Erreur de connexion à Ollama
+#### Problèmes avec Ollama (deepseek)
+- Choix du modèle: les meilleurs modèles sont souvent trop volumineux
+- Capacités: la machine doit être très puissante pour l'executer correctement
 
-**Symptôme**: Message "Impossible de se connecter au serveur Ollama local"
-
-**Solutions**:
-1. Vérifiez qu'Ollama est installé et en cours d'exécution
-2. Vérifiez que le port 11434 est accessible
-3. Assurez-vous que le modèle deepseek-r1:8b est installé avec `ollama list`
-
-#### Erreur de base de données
-
-**Symptôme**: Messages d'erreur lors de la connexion à PostgreSQL
-
-**Solutions**:
-1. Vérifiez que PostgreSQL est en cours d'exécution
-2. Vérifiez les paramètres dans le fichier `.env`
-3. Recréez la base de données avec `npm run db:reset`
+#### Fonctionnalité Notification en temps réel non implémentée
+- difficultés à mettre en place cette fonctionnalité (problème technique).
 
 #### Erreur de téléchargement de fichier
+- Certains boutons "Télécharger" pour télécharger un fichier ne fonctionnent pas (à corriger).
 
-**Symptôme**: Les fichiers ne sont pas correctement sauvegardés
+#### Le Chatbot n'est pas alimenté avec les informations des examens
+- L'etudiant pourrait l'utiliser pour avoir les réponses ...
 
-**Solutions**:
-1. Vérifiez que le dossier `uploads` existe et est accessible en écriture
-2. Vérifiez les limitations de taille de fichier (5MB pour examens, 10MB pour soumissions)
 
 ## 🤝 LA TEAM
 
