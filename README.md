@@ -84,6 +84,3 @@ Le schéma de la base de données comprend les tables principales suivantes:
 - Babacar Mbaye FAYE
 - Ahmad Tidiane KANE
 
->>>>>>> f937e7b2c7653891b83f9c1cda4e3d0c9cc0b75a
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
