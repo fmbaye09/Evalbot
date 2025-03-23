@@ -2,7 +2,10 @@
 
 Une application moderne de gestion d'examens avec correction automatique et détection de plagiat.
 
-![logo Evalbot](public/og-image.png)
+<div align="center">
+  <img src="public/og-image.png" alt="Logo Evalbot" width="400"/>
+</div>
+
 
 ## 📋 Table des matières
 
