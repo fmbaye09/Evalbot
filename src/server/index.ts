@@ -13,6 +13,7 @@ import { config } from './config';
 import examRoutes from './routes/examRoutes';
 import authRoutes from './routes/authRoutes';
 import correctionRoutes from './routes/correctionRoutes';
+import plagiarismRoutes from './routes/plagiarismRoutes';
 import { SUBMISSIONS_DIR, EXAMS_DIR, UPLOAD_DIR, ensureDirectoryExists } from './utils/fileHandler';
 
 dotenv.config();
@@ -123,6 +124,7 @@ app.use('/uploads', express.static(path.join(process.cwd(), config.uploadDir)));
 app.use('/api/auth', authRoutes);
 app.use('/api/exams', examRoutes);
 app.use('/api/correction', correctionRoutes);
+app.use('/api/plagiarism', plagiarismRoutes);
 
 // Middleware d'authentification
 const authenticateToken = async (req: AuthenticatedRequest, res: express.Response, next: express.NextFunction) => {

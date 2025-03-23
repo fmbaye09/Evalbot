@@ -16,18 +16,21 @@ import { useToast } from "@/components/ui/use-toast";
 import { gradeSubmission } from "@/services/submissionService";
 
 interface GradingDialogProps {
-  isOpen: boolean;
-  onClose: () => void;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
   submission: {
     id: string;
     exam_title: string;
     student_name: string;
+    suggestedGrade?: number;
+    suggestedFeedback?: string;
   };
+  onGraded?: () => void;
 }
 
-export function GradingDialog({ isOpen, onClose, submission }: GradingDialogProps) {
-  const [grade, setGrade] = useState<string>("");
-  const [feedback, setFeedback] = useState("");
+export function GradingDialog({ open, onOpenChange, submission, onGraded }: GradingDialogProps) {
+  const [grade, setGrade] = useState<string>(submission.suggestedGrade?.toString() || "");
+  const [feedback, setFeedback] = useState(submission.suggestedFeedback || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -56,7 +59,11 @@ export function GradingDialog({ isOpen, onClose, submission }: GradingDialogProp
         description: "La note a été enregistrée avec succès",
       });
       
-      onClose();
+      if (onGraded) {
+        onGraded();
+      } else {
+        onOpenChange(false);
+      }
     } catch (error) {
       toast({
         title: "Erreur",
@@ -69,7 +76,7 @@ export function GradingDialog({ isOpen, onClose, submission }: GradingDialogProp
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Noter la copie</DialogTitle>
@@ -110,7 +117,7 @@ export function GradingDialog({ isOpen, onClose, submission }: GradingDialogProp
             </div>
           </div>
           <DialogFooter>
-            <Button type="button" variant="secondary" onClick={onClose}>
+            <Button type="button" variant="secondary" onClick={() => onOpenChange(false)}>
               Annuler
             </Button>
             <Button type="submit" disabled={isSubmitting}>

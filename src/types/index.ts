@@ -29,4 +29,5 @@ export interface Submission {
   grade?: number;
   graded: boolean;
   studentName?: string; // Champ calculé, non stocké en base de données
+  status: 'pending' | 'graded';
 }
