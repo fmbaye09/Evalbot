@@ -244,6 +244,8 @@ DELETE /api/plagiarism/results/:examId    - Supprimer les résultats
 #### Le Chatbot n'est pas alimenté avec les informations des examens
 - L'etudiant pourrait l'utiliser pour avoir les réponses ...
 
+### Reste à faire
+- 
 
 ## 🤝 LA TEAM
 
