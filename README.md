@@ -245,7 +245,7 @@ DELETE /api/plagiarism/results/:examId    - Supprimer les résultats
 - L'etudiant pourrait l'utiliser pour avoir les réponses ...
 
 ### Reste à faire
-- 
+- Déploiement
 
 ## 🤝 LA TEAM
 
