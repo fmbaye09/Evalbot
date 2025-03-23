@@ -1,8 +1,8 @@
-# Examinateur AI
+# Evalbot
 
-Une application moderne de gestion d'examens avec détection de plagiat et assistant IA intégré.
+Une application moderne de gestion d'examens avec correction automatique et détection de plagiat.
 
-![Bannière Examinateur AI](https://via.placeholder.com/1200x300/0073e6/ffffff?text=Examinateur+AI)
+![logo Evalbot](public/og-image.png)
 
 ## 📋 Table des matières
 
