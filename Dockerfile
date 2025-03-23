@@ -18,9 +18,6 @@ COPY . .
 # Création des dossiers nécessaires pour les uploads
 RUN mkdir -p uploads/exams uploads/submissions
 
-# Construction de l'application frontend
-RUN npm run build
-
 # Exposition du port utilisé par l'application
 EXPOSE 3003
 
