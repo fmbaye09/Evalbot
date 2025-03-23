@@ -49,8 +49,28 @@ CREATE TABLE corriges_types (
     CONSTRAINT unique_exam_corrige UNIQUE (exam_id)
 );
 
+
+CREATE TABLE IF NOT EXISTS plagiarism_results (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    exam_id UUID NOT NULL REFERENCES exams(id) ON DELETE CASCADE,
+    submission1_id UUID NOT NULL REFERENCES submissions(id) ON DELETE CASCADE,
+    submission2_id UUID NOT NULL REFERENCES submissions(id) ON DELETE CASCADE,
+    similarity_score DECIMAL(5,2) NOT NULL,
+    similar_passages TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_comparison UNIQUE (submission1_id, submission2_id)
+);
+
+
+
+
 -- Index pour améliorer les performances
 CREATE INDEX idx_exams_user_id ON exams(user_id);
 CREATE INDEX idx_submissions_exam_id ON submissions(exam_id);
 CREATE INDEX idx_submissions_user_id ON submissions(user_id);
 CREATE INDEX idx_corriges_types_exam_id ON corriges_types(exam_id); 
+CREATE INDEX idx_plagiarism_exam_id ON plagiarism_results(exam_id);
+CREATE INDEX idx_plagiarism_submission1 ON plagiarism_results(submission1_id);
+CREATE INDEX idx_plagiarism_submission2 ON plagiarism_results(submission2_id);
+
