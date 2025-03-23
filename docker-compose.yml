@@ -1,0 +1,115 @@
+version: '3.8'
+
+services:
+  # Service de l'application principale
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: evalbot-app
+    restart: unless-stopped
+    ports:
+      - "3003:3003"  # Port de l'API
+      - "8084:8084"  # Port du frontend en développement
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME:-examinateur_db}
+      - DB_USER=${DB_USER:-odoo}
+      - DB_PASSWORD=${DB_PASSWORD:-odoo}
+      - JWT_SECRET=${JWT_SECRET:-votre_cle_secrete_ici}
+      - VITE_OLLAMA_API_URL=http://ollama:11434
+    volumes:
+      - ./uploads:/app/uploads
+      - app_node_modules:/app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ollama:
+        condition: service_started
+    networks:
+      - evalbot-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3003/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Service de base de données PostgreSQL
+  postgres:
+    image: postgres:14-alpine
+    container_name: evalbot-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${DB_USER:-odoo}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-odoo}
+      - POSTGRES_DB=${DB_NAME:-examinateur_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - evalbot-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-odoo} -d ${DB_NAME:-examinateur_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # Service Ollama pour l'IA
+  ollama:
+    image: ollama/ollama:latest
+    container_name: evalbot-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - evalbot-network
+    command: >
+      sh -c "ollama serve & 
+             sleep 10 && 
+             (ollama list | grep deepseek-r1:8b || ollama pull deepseek-r1:8b) & 
+             wait"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Service d'initialisation de la base de données (optionnel)
+  db-init:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: evalbot-db-init
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME:-examinateur_db}
+      - DB_USER=${DB_USER:-odoo}
+      - DB_PASSWORD=${DB_PASSWORD:-odoo}
+    command: >
+      sh -c "sleep 10 && 
+             npm run db:reset && 
+             npm run db:add-plagiarism"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - evalbot-network
+    restart: on-failure
+    
+volumes:
+  postgres_data:
+  ollama_data:
+  app_node_modules:
+
+networks:
+  evalbot-network:
+    driver: bridge 
