@@ -26,15 +26,6 @@ Une application moderne de gestion d'examens avec correction automatique et dét
 - **Correction automatique** : Évaluation assistée par IA des copies d'étudiants
 - **Chatbot** : Chatbot alimentée par le modèle deepseek-r1:8b via Ollama
 
-## 📸 Captures d'écran
-
-<div align="center">
-  <img src="https://via.placeholder.com/400x250/e6f7ff/333333?text=Dashboard+Enseignant" alt="Dashboard Enseignant" width="400"/>
-  <img src="https://via.placeholder.com/400x250/e6f7ff/333333?text=Détection+de+Plagiat" alt="Détection de Plagiat" width="400"/>
-  <img src="https://via.placeholder.com/400x250/e6f7ff/333333?text=Assistant+IA" alt="Assistant IA" width="400"/>
-  <img src="https://via.placeholder.com/400x250/e6f7ff/333333?text=Soumission+Étudiant" alt="Soumission Étudiant" width="400"/>
-</div>
-
 ## 💻 Technologies utilisées
 
 ### Frontend
@@ -87,7 +78,7 @@ Une application moderne de gestion d'examens avec correction automatique et dét
    npm run db:add-plagiarism
    ```
 
-5. Installer Ollama et le modèle deepseek-r1:8b (pour l'assistant IA)
+5. Installer Ollama et le modèle deepseek-r1:8b 
    ```bash
    # Installer Ollama depuis https://ollama.ai/download
    ollama pull deepseek-r1:8b
@@ -102,7 +93,7 @@ Une application moderne de gestion d'examens avec correction automatique et dét
 
 ### Variables d'environnement
 
-Créez un fichier `.env` à la racine du projet avec les paramètres suivants :
+Modifiez le fichier `.env` à la racine du projet avec les paramètres suivants :
 
 ```env
 # Configuration de la base de données
@@ -121,7 +112,7 @@ VITE_OLLAMA_API_URL=http://localhost:11434
 
 ### Structure des dossiers
 
-L'application crée automatiquement les dossiers suivants pour le stockage des fichiers :
+Dossiers pour le stockage des fichiers :
 
 - `uploads/` - Dossier racine pour tous les fichiers
 - `uploads/exams/` - Sujets d'examens
@@ -131,8 +122,8 @@ L'application crée automatiquement les dossiers suivants pour le stockage des f
 
 ### Accès à l'application
 
-- **Mode développement** : Accédez à l'application via `http://localhost:3000`
-- L'API est disponible sur `http://localhost:5000`
+- **Mode développement** : Accédez à l'application via `http://localhost:8084`
+- L'API est disponible sur `http://localhost:3003`
 
 ### Rôles utilisateur
 
