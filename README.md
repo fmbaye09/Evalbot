@@ -15,15 +15,14 @@ Une application moderne de gestion d'examens avec détection de plagiat et assis
 - [Architecture](#-architecture)
 - [API Reference](#-api-reference)
 - [Dépannage](#-dépannage)
-- [Contribution](#-contribution)
 
 ## 🚀 Fonctionnalités principales
 
 - **Gestion des examens** : Création, modification et suppression d'examens pour les enseignants
 - **Soumission de travaux** : Interface intuitive pour les étudiants
 - **Détection de plagiat** : Système automatisé d'analyse des similitudes entre les soumissions
-- **Assistant IA local** : Aide contextuelle alimentée par le modèle deepseek-r1:8b via Ollama
 - **Correction automatique** : Évaluation assistée par IA des copies d'étudiants
+- **Chatbot** : Chatbot alimentée par le modèle deepseek-r1:8b via Ollama
 
 ## 📸 Captures d'écran
 
@@ -65,8 +64,8 @@ Une application moderne de gestion d'examens avec détection de plagiat et assis
 
 1. Cloner le dépôt
    ```bash
-   git clone https://github.com/votre-organisation/examinateur-ai.git
-   cd examinateur-ai
+   git clone https://github.com/fmbaye09/Evalbot.git
+   cd Evalbot
    ```
 
 2. Installer les dépendances
@@ -137,7 +136,7 @@ L'application crée automatiquement les dossiers suivants pour le stockage des f
 
 L'application prend en charge deux types d'utilisateurs :
 
-1. **Enseignants** - Peuvent créer des examens, gérer les soumissions, détecter le plagiat
+1. **Enseignants** - Peuvent créer des examens, gérer les soumissions, donner une note
 2. **Étudiants** - Peuvent consulter les examens disponibles et soumettre leurs travaux
 
 ### Workflow typique
@@ -266,26 +265,10 @@ DELETE /api/plagiarism/results/:examId    - Supprimer les résultats
 1. Vérifiez que le dossier `uploads` existe et est accessible en écriture
 2. Vérifiez les limitations de taille de fichier (5MB pour examens, 10MB pour soumissions)
 
-## 🤝 Contribution
+## 🤝 LA TEAM
 
-Les contributions sont les bienvenues ! Pour contribuer :
-
-1. Forkez le projet
-2. Créez une branche pour votre fonctionnalité (`git checkout -b feature/nouvelle-fonctionnalite`)
-3. Committez vos changements (`git commit -am 'Ajout d'une nouvelle fonctionnalité'`)
-4. Poussez vers la branche (`git push origin feature/nouvelle-fonctionnalite`)
-5. Ouvrez une Pull Request
-
-## 📄 Licence
-
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
-
-## 👏 Remerciements
-
-- Équipe de développement d'Ollama
-- Créateurs du modèle deepseek-r1:8b
-- Communauté shadcn/ui pour les composants d'interface
-
----
-
-© 2023 Examinateur AI | Développé avec ❤️ 
+- Mouhamed BA
+- Mamadou DIALLO
+- Mouhamadou Mourtada DIOP
+- Babacar Mbaye FAYE
+- Ahmad Tidiane KANE
