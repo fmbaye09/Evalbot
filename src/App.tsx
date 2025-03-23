@@ -16,6 +16,7 @@ import TeacherStats from "@/pages/teacher/TeacherStats";
 import StudentExams from "@/pages/student/StudentExams";
 import StudentResults from "@/pages/student/StudentResults";
 import StudentSubmissions from "@/pages/student/StudentSubmissions";
+import AiHelp from "@/pages/common/AiHelp";
 import NotFound from "@/pages/NotFound";
 
 // Configure QueryClient with more conservative settings to prevent excessive refetching
@@ -25,7 +26,7 @@ const queryClient = new QueryClient({
       retry: 1, // Limit retry attempts
       refetchOnWindowFocus: false, // Don't refetch when window regains focus
       staleTime: 5 * 60 * 1000, // 5 minutes
-      cacheTime: 10 * 60 * 1000, // 10 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (Previously known as cacheTime)
     },
   },
 });
@@ -103,6 +104,14 @@ const App = () => {
                   }
                 />
                 <Route
+                  path="/teacher/ai-help"
+                  element={
+                    <ProtectedRoute allowedRoles={["teacher"]}>
+                      <AiHelp />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
                   path="/student"
                   element={
                     <ProtectedRoute allowedRoles={["student"]}>
@@ -131,6 +140,14 @@ const App = () => {
                   element={
                     <ProtectedRoute allowedRoles={["student"]}>
                       <StudentSubmissions />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/student/ai-help"
+                  element={
+                    <ProtectedRoute allowedRoles={["student"]}>
+                      <AiHelp />
                     </ProtectedRoute>
                   }
                 />

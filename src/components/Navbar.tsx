@@ -19,8 +19,8 @@ const Navbar = () => {
     <div className="border-b">
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex items-center gap-2">
-          <img src="/img/logo.png" alt="Logo Examinateur" className="h-8 w-auto object-contain" />
-          <span className="text-lg font-semibold">Examinateur</span>
+          <img src="/img/logo.png" alt="Logo Evalbot" className="h-8 w-auto object-contain" />
+          <span className="text-lg font-semibold">Evalbot</span>
         </div>
 
         <div className="flex items-center gap-4">
