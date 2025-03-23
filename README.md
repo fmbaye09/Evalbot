@@ -253,4 +253,4 @@ DELETE /api/plagiarism/results/:examId    - Supprimer les résultats
 - Mamadou DIALLO
 - Mouhamadou Mourtada DIOP
 - Babacar Mbaye FAYE
-- Ahmad Tidiane KANE
+- Amadou Tidiane KANE
